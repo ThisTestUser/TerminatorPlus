@@ -1,4 +1,4 @@
-# TerminatorPlus [v3.0-BETA]
+# TerminatorPlus [v3.2-BETA]
 
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)
 ![GitHub](https://img.shields.io/github/languages/code-size/HorseNuggets/TerminatorPlus?color=cyan&label=Size&labelColor=000000&logo=GitHub&style=for-the-badge)
@@ -26,7 +26,7 @@ Bot bot = Bot.createBot(loc, "Dream");
 
 ### Version Support
 
-This plugin requires [Spigot 1.16.5](https://www.spigotmc.org/wiki/buildtools/#1-16-5). NMS 1.17 kind of screwed up a lot of the EntityPlayer variable names (obfuscation yay!!!) so I don't really wanna have to deal with that yet.
+This plugin requires [Spigot 1.17.1](https://www.spigotmc.org/wiki/buildtools/#1-17-1). This plugin does not work on **any** other version.
 
 ### Future Updates
 
@@ -38,4 +38,4 @@ This project is in a very early stage, and we have many more ideas to tackle.
 
 ## License
 
-This project is licensed under [Eclipse Public License](https://github.com/batchprogrammer314/player-ai/blob/master/LICENSE).
+This project is licensed under [Eclipse Public License](LICENSE).
