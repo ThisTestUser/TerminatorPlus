@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.bot.agent.legacyagent.ai;
 
-import net.minecraft.server.v1_16_R3.EntityLiving;
+import net.minecraft.world.entity.LivingEntity;
 import net.nuggetmc.tplus.TerminatorPlus;
 import net.nuggetmc.tplus.bot.Bot;
 import net.nuggetmc.tplus.bot.BotManager;
@@ -141,7 +141,7 @@ public class IntelligenceAgent {
             }
 
             bots.forEach(bot -> {
-                String name = bot.getName();
+                String name = bot.getName().getString();
 
                 while (this.bots.containsKey(name)) {
                     name += "_";
@@ -181,7 +181,7 @@ public class IntelligenceAgent {
             Bot bot = entry.getKey();
             boolean check = i <= cutoff;
             if (check) {
-                print(ChatColor.GRAY + "[" + ChatColor.YELLOW + "#" + i + ChatColor.GRAY + "] " + ChatColor.GREEN + bot.getName()
+                print(ChatColor.GRAY + "[" + ChatColor.YELLOW + "#" + i + ChatColor.GRAY + "] " + ChatColor.GREEN + bot.getName().getString()
                         + ChatUtils.BULLET_FORMATTED + ChatColor.RED + bot.getKills() + " kills");
                 winners.add(bot);
             }
@@ -245,7 +245,7 @@ public class IntelligenceAgent {
     }
 
     private int aliveCount() {
-        return (int) bots.values().stream().filter(EntityLiving::isAlive).count();
+        return (int) bots.values().stream().filter(LivingEntity::isAlive).count();
     }
 
     private void close() {
