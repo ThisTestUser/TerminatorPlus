@@ -1,6 +1,6 @@
 name: TerminatorPlus
 main: net.nuggetmc.tplus.TerminatorPlus
-version: 3.2-BETA
+version: ${project.version}
 api-version: 1.17
 author: HorseNuggets
 

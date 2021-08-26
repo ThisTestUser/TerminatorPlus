@@ -249,6 +249,10 @@ public class Bot extends ServerPlayer {
         fireDamageCheck();
         fallDamageCheck();
 
+        /*if(getY() < -64) { // TODO: Reimplement
+            an();
+        }*/
+
         oldVelocity = velocity.clone();
     }
 
@@ -654,7 +658,7 @@ public class Bot extends ServerPlayer {
 
             sendPacket(new ClientboundRotateHeadPacket(this, (byte) (yaw * 256 / 360f)));
         }
-        
+
         setRot(yaw, pitch);
     }
 
@@ -685,7 +689,7 @@ public class Bot extends ServerPlayer {
         setItem(item, EquipmentSlot.OFFHAND);
     }
 
-    private void setItem(org.bukkit.inventory.ItemStack item, EquipmentSlot slot) {
+    public void setItem(org.bukkit.inventory.ItemStack item, EquipmentSlot slot) {
         if (item == null) item = defaultItem;
 
         if (slot == EquipmentSlot.MAINHAND) {
