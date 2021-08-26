@@ -249,9 +249,7 @@ public class Bot extends ServerPlayer {
         fireDamageCheck();
         fallDamageCheck();
 
-        /*if(getY() < -64) { // TODO: Reimplement
-            an();
-        }*/
+        checkOutOfWorld();
 
         oldVelocity = velocity.clone();
     }
