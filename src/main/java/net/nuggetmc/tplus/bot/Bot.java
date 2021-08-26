@@ -712,7 +712,7 @@ public class Bot extends ServerPlayer {
     }
 
     public void stand() {
-        Player player = (Player) getBukkitPlayer();
+        Player player = getBukkitPlayer();
         player.setSneaking(false);
         player.setSwimming(false);
 
