@@ -93,6 +93,8 @@ public class Bot extends ServerPlayer {
     private byte noFallTicks;
 
     private final Vector offset;
+    
+    public static boolean mobTargeting;
 
     private Bot(MinecraftServer minecraftserver, ServerLevel world, GameProfile profile) {
         super(minecraftserver, world, profile);
@@ -135,7 +137,10 @@ public class Bot extends ServerPlayer {
         bot.teleportTo(loc.getX(), loc.getY(), loc.getZ());
         bot.setRot(loc.getYaw(), loc.getPitch());
         bot.getBukkitPlayer().setNoDamageTicks(0);
-        nmsWorld.addEntity(bot, CreatureSpawnEvent.SpawnReason.COMMAND);
+        if(mobTargeting)
+        	nmsWorld.addNewPlayer(bot);
+        else
+        	nmsWorld.addEntity(bot, CreatureSpawnEvent.SpawnReason.COMMAND);
 
         bot.renderAll();
 
