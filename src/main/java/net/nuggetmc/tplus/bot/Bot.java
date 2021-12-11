@@ -137,11 +137,13 @@ public class Bot extends ServerPlayer {
         bot.teleportTo(loc.getX(), loc.getY(), loc.getZ());
         bot.setRot(loc.getYaw(), loc.getPitch());
         bot.getBukkitPlayer().setNoDamageTicks(0);
+        Bukkit.getOnlinePlayers().forEach(p -> ((CraftPlayer) p).getHandle().connection.send(
+        		new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, bot)));
+        
         if(mobTargeting)
         	nmsWorld.addNewPlayer(bot);
         else
         	nmsWorld.addEntity(bot, CreatureSpawnEvent.SpawnReason.COMMAND);
-
         bot.renderAll();
 
         TerminatorPlus.getInstance().getManager().add(bot);
@@ -150,8 +152,8 @@ public class Bot extends ServerPlayer {
     }
 
     private void renderAll() {
-        Packet<?>[] packets = getRenderPackets();
-        Bukkit.getOnlinePlayers().forEach(p -> render(((CraftPlayer) p).getHandle().connection, packets, false));
+        Packet<?>[] packets = getRenderPacketsNoInfo();
+        Bukkit.getOnlinePlayers().forEach(p -> renderNoInfo(((CraftPlayer) p).getHandle().connection, packets, false));
     }
 
     private void render(ServerPlayerConnection connection, Packet<?>[] packets, boolean login) {
@@ -166,6 +168,17 @@ public class Bot extends ServerPlayer {
         }
     }
 
+    private void renderNoInfo(ServerPlayerConnection connection, Packet<?>[] packets, boolean login) {
+        connection.send(packets[0]);
+        connection.send(packets[1]);
+
+        if (login) {
+            scheduler.runTaskLater(plugin, () -> connection.send(packets[2]), 10);
+        } else {
+            connection.send(packets[2]);
+        }
+    }
+    
     public void render(ServerPlayerConnection connection, boolean login) {
         render(connection, getRenderPackets(), login);
     }
@@ -179,6 +192,14 @@ public class Bot extends ServerPlayer {
         };
     }
 
+    private Packet<?>[] getRenderPacketsNoInfo() {
+        return new Packet[] {
+            new ClientboundAddPlayerPacket(this),
+            new ClientboundSetEntityDataPacket(this.getId(), this.getEntityData(), true),
+            new ClientboundRotateHeadPacket(this, (byte) ((getYRot() * 256f) / 360f))
+        };
+    }
+    
     public void setDefaultItem(ItemStack item) {
         this.defaultItem = item;
     }
@@ -306,7 +327,7 @@ public class Bot extends ServerPlayer {
         if (invulnerableTime == 0) {
             if (lava) {
                 damageEntity0(DamageSource.LAVA, 4);
-                invulnerableTime = 12;
+                invulnerableTime = 20;//this used to be 12 ticks but that would cause the bot to take damage too quickly
             } else if (fire) {
                 damageEntity0(DamageSource.IN_FIRE, 2);
                 invulnerableTime = 12;
@@ -533,7 +554,8 @@ public class Bot extends ServerPlayer {
     private void dieCheck() {
         if (removeOnDeath) {
             remove(RemovalReason.KILLED);
-            scheduler.runTask(plugin, () -> plugin.getManager().remove(this)); // maybe making this later will fix the concurrentmodificationexception?
+            //scheduler.runTask(plugin, () -> plugin.getManager().remove(this)); // maybe making this later will fix the concurrentmodificationexception?
+            plugin.getManager().remove(this); //this should fix the concurrentmodificationexception mentioned above, I used the ConcurrentHashMap.newKeySet to make a "ConcurrentHashSet"
             scheduler.runTaskLater(plugin, this::setDead, 30);
 
             this.removeTab();
