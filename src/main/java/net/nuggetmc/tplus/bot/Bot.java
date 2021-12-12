@@ -544,6 +544,7 @@ public class Bot extends ServerPlayer {
     private void setDead() {
         sendPacket(new ClientboundRemoveEntitiesPacket(getId()));
 
+        remove(RemovalReason.KILLED);
         this.dead = true;
         this.inventoryMenu.removed(this);
         if (this.containerMenu != null) {
@@ -553,7 +554,6 @@ public class Bot extends ServerPlayer {
 
     private void dieCheck() {
         if (removeOnDeath) {
-            remove(RemovalReason.KILLED);
             //scheduler.runTask(plugin, () -> plugin.getManager().remove(this)); // maybe making this later will fix the concurrentmodificationexception?
             plugin.getManager().remove(this); //this should fix the concurrentmodificationexception mentioned above, I used the ConcurrentHashMap.newKeySet to make a "ConcurrentHashSet"
             scheduler.runTaskLater(plugin, this::setDead, 30);
