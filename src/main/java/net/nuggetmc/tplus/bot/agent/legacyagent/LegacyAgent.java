@@ -354,8 +354,10 @@ public class LegacyAgent extends Agent {
         }
 
         Location loc = bot.getLocation();
-
-        if (!loc.clone().add(0, -1, 0).getBlock().getType().isSolid()) return;
+        Material mat = loc.clone().add(0, -1, 0).getBlock().getType();
+        
+        if (!mat.isSolid()) return;
+        if (world.getEnvironment() == World.Environment.NETHER && mat.isTransparent()) return;
 
         event.setCancelled(true);
 
