@@ -3,7 +3,6 @@ package net.nuggetmc.tplus.bot;
 import com.mojang.authlib.GameProfile;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.Connection;
-import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.game.*;
@@ -35,11 +34,11 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Waterlogged;
-import org.bukkit.craftbukkit.v1_19_R1.CraftEquipmentSlot;
-import org.bukkit.craftbukkit.v1_19_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_18_R2.CraftEquipmentSlot;
+import org.bukkit.craftbukkit.v1_18_R2.CraftServer;
+import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
@@ -79,7 +78,7 @@ public class Bot extends ServerPlayer implements Terminator {
     private boolean inPlayerList;
     
     private Bot(MinecraftServer minecraftServer, ServerLevel worldServer, GameProfile profile, boolean addToPlayerList) {
-        super(minecraftServer, worldServer, profile, null);
+        super(minecraftServer, worldServer, profile);
 
         this.plugin = TerminatorPlus.getInstance();
         this.scheduler = Bukkit.getScheduler();
@@ -117,7 +116,7 @@ public class Bot extends ServerPlayer implements Terminator {
         bot.connection = new ServerGamePacketListenerImpl(nmsServer, new Connection(PacketFlow.CLIENTBOUND) {
 
             @Override
-            public void send(Packet<?> packet, @Nullable PacketSendListener callbacks) {
+            public void send(Packet<?> packet) {
 
             }
         }, bot);

@@ -62,8 +62,6 @@ public class LegacyMats {
         Material.PODZOL,
         Material.MYCELIUM,
         Material.GRAVEL,
-        Material.MUD,
-        Material.MUDDY_MANGROVE_ROOTS,
         Material.SAND,
         Material.RED_SAND,
         Material.SOUL_SAND,
@@ -85,8 +83,6 @@ public class LegacyMats {
         Material.JUNGLE_SIGN, Material.JUNGLE_SLAB, Material.JUNGLE_STAIRS, Material.JUNGLE_TRAPDOOR, Material.JUNGLE_WALL_SIGN, Material.JUNGLE_WOOD,
         Material.SPRUCE_PLANKS, Material.SPRUCE_DOOR, Material.SPRUCE_FENCE, Material.SPRUCE_FENCE_GATE, Material.SPRUCE_LOG,
         Material.SPRUCE_SIGN, Material.SPRUCE_SLAB, Material.SPRUCE_STAIRS, Material.SPRUCE_TRAPDOOR, Material.SPRUCE_WALL_SIGN, Material.SPRUCE_WOOD,
-        Material.MANGROVE_PLANKS, Material.MANGROVE_DOOR, Material.MANGROVE_FENCE, Material.MANGROVE_FENCE_GATE, Material.MANGROVE_LOG,
-        Material.MANGROVE_SIGN, Material.MANGROVE_SLAB, Material.MANGROVE_STAIRS, Material.MANGROVE_TRAPDOOR, Material.MANGROVE_WALL_SIGN, Material.MANGROVE_WOOD,
         Material.CRIMSON_PLANKS, Material.CRIMSON_DOOR, Material.CRIMSON_FENCE, Material.CRIMSON_FENCE_GATE, Material.CRIMSON_STEM,
         Material.CRIMSON_SIGN, Material.CRIMSON_SLAB, Material.CRIMSON_STAIRS, Material.CRIMSON_TRAPDOOR, Material.CRIMSON_WALL_SIGN,
         Material.WARPED_PLANKS, Material.WARPED_DOOR, Material.WARPED_FENCE, Material.WARPED_FENCE_GATE, Material.WARPED_STEM,
@@ -189,7 +185,6 @@ public class LegacyMats {
     	Material.GLOW_LICHEN,
     	Material.HANGING_ROOTS,
     	Material.POWDER_SNOW,
-    	Material.SCULK_VEIN,
     	Material.STRING,
     	Material.TRIPWIRE_HOOK,
     	Material.LADDER,
@@ -323,7 +318,7 @@ public class LegacyMats {
     		if (block.getType() == Material.CHAIN && ((Chain)block.getBlockData()).getAxis() == Axis.Y
     			&& !((Chain)block.getBlockData()).isWaterlogged())
     			return false;
-    		if ((block.getType().data == Leaves.class || block.getType() == Material.MANGROVE_ROOTS
+    		if ((block.getType().data == Leaves.class
     			|| block.getType() == Material.IRON_BARS || block.getType().name().endsWith("GLASS_PANE"))
     			&& !((Waterlogged)block.getBlockData()).isWaterlogged())
     			return false;
@@ -452,7 +447,6 @@ public class LegacyMats {
     			case HOPPER:
     			case LIGHTNING_ROD:
     			case SCULK_SENSOR:
-    			case SCULK_SHRIEKER:
     				return false;
 				default:
     		}
@@ -508,7 +502,6 @@ public class LegacyMats {
     			case CONDUIT:
     			case LIGHTNING_ROD:
     			case SCULK_SENSOR:
-    			case SCULK_SHRIEKER:
     				return true;
 				default:
 			}
