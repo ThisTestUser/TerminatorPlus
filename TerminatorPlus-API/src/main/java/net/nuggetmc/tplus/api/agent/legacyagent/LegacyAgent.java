@@ -56,6 +56,8 @@ public class LegacyAgent extends Agent {
     private double regionWeightX;
     private double regionWeightY;
     private double regionWeightZ;
+    
+    public static final Set<EntityType> HOSTILE_MOBS = new HashSet<>();
 
     public LegacyAgent(BotManager manager, Plugin plugin) {
         super(manager, plugin);
@@ -1456,7 +1458,7 @@ public class LegacyAgent extends Agent {
 
             case NEAREST_HOSTILE: {
                 for (LivingEntity entity : bot.getBukkitEntity().getWorld().getLivingEntities()) {
-                    if (entity instanceof Monster && validateCloserEntity(entity, loc, result)) {
+                    if ((entity instanceof Monster || HOSTILE_MOBS.contains(entity.getType())) && validateCloserEntity(entity, loc, result)) {
                         result = entity;
                     }
                 }
@@ -1476,7 +1478,7 @@ public class LegacyAgent extends Agent {
 
             case NEAREST_MOB: {
                 for (LivingEntity entity : bot.getBukkitEntity().getWorld().getLivingEntities()) {
-                    if (entity instanceof Mob && validateCloserEntity(entity, loc, result)) {
+                    if ((entity instanceof Mob || HOSTILE_MOBS.contains(entity.getType())) && validateCloserEntity(entity, loc, result)) {
                         result = entity;
                     }
                 }

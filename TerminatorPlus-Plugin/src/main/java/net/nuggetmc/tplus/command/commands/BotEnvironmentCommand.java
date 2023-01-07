@@ -11,12 +11,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.nuggetmc.tplus.api.agent.legacyagent.LegacyAgent;
 import net.nuggetmc.tplus.api.agent.legacyagent.LegacyMats;
 import net.nuggetmc.tplus.api.utils.ChatUtils;
 import net.nuggetmc.tplus.command.CommandHandler;
@@ -116,7 +118,7 @@ public class BotEnvironmentCommand extends CommandInstance {
     					net.minecraft.world.level.material.Material mat = (net.minecraft.world.level.material.Material) materialField.get(block);
     					valid = mat.blocksMotion();
     				}
-    			if (valid && LegacyMats.solidMaterials.add(entry.getValue()))
+    			if (valid && LegacyMats.SOLID_MATERIALS.add(entry.getValue()))
     				added++;
     		}
     		sender.sendMessage("Successfully added " + ChatColor.BLUE + added + ChatColor.RESET + " materials with prefix " + ChatColor.GREEN + prefix + ChatColor.RESET);
@@ -169,7 +171,7 @@ public class BotEnvironmentCommand extends CommandInstance {
     		sender.sendMessage("The material you specified does not exist!");
     		return;
     	}
-		if (LegacyMats.solidMaterials.add(mat))
+		if (LegacyMats.SOLID_MATERIALS.add(mat))
 			sender.sendMessage("Successfully added " + ChatColor.BLUE + mat.name() + ChatColor.RESET + " to the list.");
 		else
 			sender.sendMessage(ChatColor.BLUE + mat.name() + ChatColor.RESET + " already exists in the list!");
@@ -219,7 +221,7 @@ public class BotEnvironmentCommand extends CommandInstance {
     		sender.sendMessage("The material you specified does not exist!");
     		return;
     	}
-		if (LegacyMats.solidMaterials.remove(mat))
+		if (LegacyMats.SOLID_MATERIALS.remove(mat))
 			sender.sendMessage("Successfully removed " + ChatColor.BLUE + mat.name() + ChatColor.RESET + " from the list.");
 		else
 			sender.sendMessage(ChatColor.BLUE + mat.name() + ChatColor.RESET + " does not exist in the list!");
@@ -232,9 +234,9 @@ public class BotEnvironmentCommand extends CommandInstance {
     )
     public void listSolids(CommandSender sender) {
     	sender.sendMessage(ChatUtils.LINE);
-    	for (Material mat : LegacyMats.solidMaterials)
+    	for (Material mat : LegacyMats.SOLID_MATERIALS)
     		sender.sendMessage(ChatColor.GREEN + mat.name() + ChatColor.RESET);
-    	sender.sendMessage("Total items: " + ChatColor.BLUE + LegacyMats.solidMaterials.size() + ChatColor.RESET);
+    	sender.sendMessage("Total items: " + ChatColor.BLUE + LegacyMats.SOLID_MATERIALS.size() + ChatColor.RESET);
     	sender.sendMessage(ChatUtils.LINE);
     }
     
@@ -244,8 +246,66 @@ public class BotEnvironmentCommand extends CommandInstance {
         aliases = {"clearsolids"}
     )
     public void clearSolids(CommandSender sender) {
-    	int size = LegacyMats.solidMaterials.size();
-    	LegacyMats.solidMaterials.clear();
+    	int size = LegacyMats.SOLID_MATERIALS.size();
+    	LegacyMats.SOLID_MATERIALS.clear();
+    	sender.sendMessage("Removed all " + ChatColor.BLUE + size + ChatColor.RESET + " item(s) from the list.");
+    }
+    
+    @Command(
+        name = "addHostileMob",
+        desc = "Adds a mob type to the list of hostile mobs.",
+        aliases = {"addhostilemob"}
+    )
+    public void addHostileMob(CommandSender sender, @Arg("mobName") String mobName) {
+    	EntityType type = EntityType.fromName(mobName);
+    	if (type == null) {
+    		sender.sendMessage("The entity type you specified does not exist!");
+    		return;
+    	}
+    	if (LegacyAgent.HOSTILE_MOBS.add(type))
+    		sender.sendMessage("Successfully added " + ChatColor.BLUE + type.name() + ChatColor.RESET + " to the list.");
+    	else
+    		sender.sendMessage(ChatColor.BLUE + type.name() + ChatColor.RESET + " already exists in the list!");
+    }
+    
+    @Command(
+        name = "removeHostileMob",
+        desc = "Removes a mob type to the list of hostile mobs.",
+        aliases = {"removehostilemob"}
+    )
+    public void removeHostileMob(CommandSender sender, @Arg("mobName") String mobName) {
+    	EntityType type = EntityType.fromName(mobName);
+    	if (type == null) {
+    		sender.sendMessage("The entity type you specified does not exist!");
+    		return;
+    	}
+    	if (LegacyAgent.HOSTILE_MOBS.remove(type))
+    		sender.sendMessage("Successfully removed " + ChatColor.BLUE + type.name() + ChatColor.RESET + " from the list.");
+    	else
+    		sender.sendMessage(ChatColor.BLUE + type.name() + ChatColor.RESET + " does not exist in the list!");
+    }
+    
+    @Command(
+        name = "listHostileMobs",
+        desc = "Displays the list of hostile mobs manually added.",
+        aliases = {"listhostilemobs"}
+    )
+    public void listHostileMobs(CommandSender sender) {
+    	sender.sendMessage(ChatUtils.LINE);
+    	for (EntityType type : LegacyAgent.HOSTILE_MOBS)
+    		sender.sendMessage(ChatColor.GREEN + type.name() + ChatColor.RESET);
+    	sender.sendMessage("Total items: " + ChatColor.BLUE + LegacyAgent.HOSTILE_MOBS.size() + ChatColor.RESET);
+    	sender.sendMessage(ChatUtils.LINE);
+    }
+    
+    @Command(
+        name = "removeHostileMobs",
+        desc = "Clears the list of hostile mobs manually added.",
+        aliases = {"removehostilemobs"}
+    )
+    public void removeHostileMobs(CommandSender sender) {
+    	int size = LegacyAgent.HOSTILE_MOBS.size();
+    	LegacyAgent.HOSTILE_MOBS.clear();
     	sender.sendMessage("Removed all " + ChatColor.BLUE + size + ChatColor.RESET + " item(s) from the list.");
     }
     

@@ -512,9 +512,9 @@ public class LegacyMats {
 	/**
 	 * This set stores solid materials that are added by mods.
 	 */
-	public static final Set<Material> solidMaterials = new HashSet<>();
+	public static final Set<Material> SOLID_MATERIALS = new HashSet<>();
 	
 	public static boolean isSolid(Material mat) {
-		return mat.isSolid() || solidMaterials.contains(mat);
+		return mat.isSolid() || SOLID_MATERIALS.contains(mat);
 	}
 }
