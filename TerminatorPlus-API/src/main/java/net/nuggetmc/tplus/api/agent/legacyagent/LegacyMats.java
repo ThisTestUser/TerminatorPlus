@@ -314,7 +314,7 @@ public class LegacyMats {
     }
     
     public static boolean canPlaceWater(Block block, Optional<Double> entityYPos) {
-    	if (block.getType().isSolid()) {
+    	if (isSolid(block.getType())) {
     		if (block.getType() == Material.CHAIN && ((Chain)block.getBlockData()).getAxis() == Axis.Y
     			&& !((Chain)block.getBlockData()).isWaterlogged())
     			return false;
@@ -376,7 +376,7 @@ public class LegacyMats {
     }
     
     public static boolean canPlaceTwistingVines(Block block) {
-    	if (block.getType().isSolid()) {
+    	if (isSolid(block.getType())) {
     		if (block.getType().data == Leaves.class)
     			return false;
     		if (block.getType().name().endsWith("_CORAL_FAN") || block.getType().name().endsWith("_CORAL")
@@ -507,5 +507,14 @@ public class LegacyMats {
 			}
 			return false;
 		}
+	}
+	
+	/**
+	 * This set stores solid materials that are added by mods.
+	 */
+	public static final Set<Material> solidMaterials = new HashSet<>();
+	
+	public static boolean isSolid(Material mat) {
+		return mat.isSolid() || solidMaterials.contains(mat);
 	}
 }
