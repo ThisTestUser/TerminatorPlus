@@ -318,8 +318,7 @@ public class LegacyMats {
     		if (block.getType() == Material.CHAIN && ((Chain)block.getBlockData()).getAxis() == Axis.Y
     			&& !((Chain)block.getBlockData()).isWaterlogged())
     			return false;
-    		if ((block.getType().data == Leaves.class
-    			|| block.getType() == Material.IRON_BARS || block.getType().name().endsWith("GLASS_PANE"))
+    		if ((block.getType() == Material.IRON_BARS || block.getType().name().endsWith("GLASS_PANE"))
     			&& !((Waterlogged)block.getBlockData()).isWaterlogged())
     			return false;
     		if (block.getType().data == Slab.class && ((Slab)block.getBlockData()).getType() == Slab.Type.TOP
