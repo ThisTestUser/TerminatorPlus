@@ -46,7 +46,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,6 +92,11 @@ public class Bot extends ServerPlayer implements Terminator {
             minecraftServer.getPlayerList().getPlayers().add(this);
             inPlayerList = true;
         }
+
+        // Magma fix - In case a mod causes the Bukkit entity to be created too early
+        try {
+        	getClass().getMethod("resetBukkitEntity").invoke(this);
+        } catch (ReflectiveOperationException e) {}
 
         //this.entityData.set(new EntityDataAccessor<>(16, EntityDataSerializers.BYTE), (byte) 0xFF);
     }

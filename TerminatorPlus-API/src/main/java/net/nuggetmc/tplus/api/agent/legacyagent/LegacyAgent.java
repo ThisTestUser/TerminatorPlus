@@ -57,7 +57,8 @@ public class LegacyAgent extends Agent {
     private double regionWeightY;
     private double regionWeightZ;
     
-    public static final Set<EntityType> HOSTILE_MOBS = new HashSet<>();
+    public static final Set<EntityType> CUSTOM_TYPES_LIST = new HashSet<>();
+    public static boolean areCustomTypesHostile = false;
 
     public LegacyAgent(BotManager manager, Plugin plugin) {
         super(manager, plugin);
@@ -1458,7 +1459,7 @@ public class LegacyAgent extends Agent {
 
             case NEAREST_HOSTILE: {
                 for (LivingEntity entity : bot.getBukkitEntity().getWorld().getLivingEntities()) {
-                    if ((entity instanceof Monster || HOSTILE_MOBS.contains(entity.getType())) && validateCloserEntity(entity, loc, result)) {
+                    if ((entity instanceof Monster || (areCustomTypesHostile && CUSTOM_TYPES_LIST.contains(entity.getType()))) && validateCloserEntity(entity, loc, result)) {
                         result = entity;
                     }
                 }
@@ -1478,7 +1479,7 @@ public class LegacyAgent extends Agent {
 
             case NEAREST_MOB: {
                 for (LivingEntity entity : bot.getBukkitEntity().getWorld().getLivingEntities()) {
-                    if ((entity instanceof Mob || HOSTILE_MOBS.contains(entity.getType())) && validateCloserEntity(entity, loc, result)) {
+                    if ((entity instanceof Mob || CUSTOM_TYPES_LIST.contains(entity.getType())) && validateCloserEntity(entity, loc, result)) {
                         result = entity;
                     }
                 }
@@ -1528,15 +1529,29 @@ public class LegacyAgent extends Agent {
                         }
                     }
                 }
+                
+                break;
             }
-            case PLAYER: { //Target a single player. Defaults to NEAREST_VULNERABLE_PLAYER if no player found.
+            
+            case CUSTOM_LIST: {
+                for (LivingEntity entity : bot.getBukkitEntity().getWorld().getLivingEntities()) {
+                    if (CUSTOM_TYPES_LIST.contains(entity.getType()) && validateCloserEntity(entity, loc, result)) {
+                        result = entity;
+                    }
+                }
+                
+                break;
+            }
+            
+            case PLAYER: {
                 if (bot.getTargetPlayer() != null) {
                     Player player = Bukkit.getPlayer(bot.getTargetPlayer());
                     if (player != null && !botsInPlayerList.contains(player) && validateCloserEntity(player, loc, null)) {
-                        return player;
+                        result = player;
                     }
                 }
-                return locateTarget(bot, loc, EnumTargetGoal.NEAREST_VULNERABLE_PLAYER);
+                
+                break;
             }
         }
         TerminatorLocateTargetEvent event = new TerminatorLocateTargetEvent(bot, result);
