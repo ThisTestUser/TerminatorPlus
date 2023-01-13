@@ -1,9 +1,7 @@
 plugins {
     id("java")
+    id("net.nuggetmc.java-conventions")
 }
-
-group = "net.nuggetmc"
-version = "3.3.1-BETA"
 
 val jarName = "TerminatorPlus-" + version;
 
@@ -26,7 +24,7 @@ tasks.processResources {
 }
 
 tasks.jar {
-    from(configurations.compileClasspath.get().map { if (it.isDirectory()) it else zipTree(it) })
+    from(configurations.compileClasspath.get().map { if (it.getName().endsWith(".jar")) zipTree(it) else it })
     archiveFileName.set(jarName + ".jar")
 }
 
