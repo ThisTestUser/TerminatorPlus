@@ -101,7 +101,7 @@ public class BotEnvironmentCommand extends CommandInstance {
     		return;    		
     	}
     	Material mat = loc.getBlock().getType();
-		sender.sendMessage(String.format("Material at " + ChatColor.BLUE + "(%d, %d, %d)" + ChatColor.RESET + ": " + ChatColor.GREEN + "%s",
+		sender.sendMessage(String.format("Material at " + ChatColor.BLUE + "(%d, %d, %d)" + ChatColor.RESET + ": " + ChatColor.GREEN + "%s" + ChatColor.RESET,
 			loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), mat.name()));
     }
     
