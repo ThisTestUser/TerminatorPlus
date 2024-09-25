@@ -94,11 +94,6 @@ public class BotEnvironmentCommand extends CommandInstance {
                     loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
             return;
         }
-        if (Math.abs(loc.getX() - sender.getLocation().getX()) > 250 || Math.abs(loc.getZ() - sender.getLocation().getZ()) > 250) {
-            sender.sendMessage(String.format("The location at " + ChatColor.BLUE + "(%d, %d, %d)" + ChatColor.RESET + " is too far away.",
-                    loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
-            return;            
-        }
         Material mat = loc.getBlock().getType();
         sender.sendMessage(String.format("Material at " + ChatColor.BLUE + "(%d, %d, %d)" + ChatColor.RESET + ": " + ChatColor.GREEN + "%s" + ChatColor.RESET,
                 loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), mat.name()));
@@ -178,11 +173,6 @@ public class BotEnvironmentCommand extends CommandInstance {
                     loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
                 return;
             }
-            if (Math.abs(loc.getX() - ((Player)sender).getLocation().getX()) > 250 || Math.abs(loc.getZ() - ((Player)sender).getLocation().getZ()) > 250) {
-                sender.sendMessage(String.format("The location at " + ChatColor.BLUE + "(%d, %d, %d)" + ChatColor.RESET + " is too far away.",
-                    loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
-                return;            
-            }
             mat = loc.getBlock().getType();
         } else {
             sender.sendMessage("Invalid syntax!");
@@ -228,11 +218,6 @@ public class BotEnvironmentCommand extends CommandInstance {
                 sender.sendMessage(String.format("The location at " + ChatColor.BLUE + "(%d, %d, %d)" + ChatColor.RESET + " is not loaded.",
                     loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
                 return;
-            }
-            if (Math.abs(loc.getX() - ((Player)sender).getLocation().getX()) > 250 || Math.abs(loc.getZ() - ((Player)sender).getLocation().getZ()) > 250) {
-                sender.sendMessage(String.format("The location at " + ChatColor.BLUE + "(%d, %d, %d)" + ChatColor.RESET + " is too far away.",
-                    loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
-                return;            
             }
             mat = loc.getBlock().getType();
         } else {
