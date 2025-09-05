@@ -31,7 +31,6 @@ public class LegacyMats {
         Material.VINE,
         Material.FERN,
         Material.LARGE_FERN,
-        Material.SHORT_GRASS,
         Material.TALL_GRASS,
         Material.SEAGRASS,
         Material.TALL_SEAGRASS,
