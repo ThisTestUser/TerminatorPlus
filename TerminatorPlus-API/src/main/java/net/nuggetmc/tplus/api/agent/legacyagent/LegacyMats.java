@@ -168,7 +168,6 @@ public class LegacyMats {
     
     public static final Set<Material> INSTANT_BREAK = new HashSet<>(concatTypes(Lists.newArrayList(
         Material.TALL_GRASS,
-        Material.SHORT_GRASS,
         Material.FERN,
         Material.LARGE_FERN,
         Material.KELP_PLANT,
